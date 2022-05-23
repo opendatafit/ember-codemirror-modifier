@@ -1,5 +1,15 @@
 {{page-title "Dummy"}}
 
-<h2 id="title">Welcome to Ember</h2>
+<h2 id="title">ember-codemirror test</h2>
+
+<div
+  {{code-mirror
+    content=this.content
+    onUpdate=this.onUpdate
+    path=this.path
+    readOnly=false
+  }}
+>
+</div>
 
 {{outlet}}
