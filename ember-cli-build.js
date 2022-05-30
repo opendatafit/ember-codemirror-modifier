@@ -8,6 +8,7 @@ module.exports = function (defaults) {
   });
 
   app.import('node_modules/codemirror/lib/codemirror.css');
+  app.import('node_modules/codemirror/theme/neat.css');
 
   /*
     This build file specifies the options for the dummy test app of this
