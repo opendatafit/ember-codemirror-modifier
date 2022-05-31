@@ -1,1 +1,1 @@
-export { default } from 'ember-codemirror/modifiers/code-mirror';
+export { default } from '@opendatafit/ember-codemirror/modifiers/code-mirror';
