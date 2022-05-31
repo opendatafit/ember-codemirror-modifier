@@ -1,6 +1,6 @@
 import { action } from '@ember/object';
 import { bind } from '@ember/runloop';
-import Modifier from 'ember-modifier';
+import Modifier, { ArgsFor, PositionalArgs, NamedArgs } from 'ember-modifier';
 
 import CodeMirror from 'codemirror';
 import 'codemirror/addon/edit/matchbrackets';
@@ -10,50 +10,55 @@ import 'codemirror/mode/javascript/javascript';
 import 'codemirror/mode/python/python';
 
 
-interface Args {
-  named: {
-    content: string;
-    mode: string;
-    readOnly: boolean;
-    onUpdate: (content: string) => void;
-    [key: string]: unknown;
-  };
-  positional: never;
+interface CodeMirrorSignature {
+  Args: {
+    Named: {
+      content: string;
+      mode: string;
+      readOnly: boolean;
+      onUpdate: (content: string) => void;
+    };
+    Positional: never;
+  }
 }
 
 
-export default class CodeMirrorModifier extends Modifier<Args> {
+export default class CodeMirrorModifier extends Modifier<CodeMirrorSignature> {
   private _editor!: CodeMirror.Editor;
+  private _onUpdate!: (content: string) => void;
 
-  didInstall() {
-    this._setup();
+  constructor(
+    owner: unknown,
+    args: ArgsFor<CodeMirrorSignature>
+  ) {
+    super(owner, args);
+    this._onUpdate = args.named.onUpdate;
   }
 
-  didUpdateArguments() {
-    if (this._editor.getValue() !== this.args.named.content) {
-      this._editor.setValue(this.args.named.content);
-    }
-
-    this._editor.setOption('readOnly', this.args.named.readOnly);
-    this._editor.setOption('mode', this.args.named.mode);
-  }
-
-  @action
-  private _onChange(editor: CodeMirror.Editor, _changeObject: CodeMirror.EditorChange) {
-    this.args.named.onUpdate(editor.getValue());
-  }
-
-  private _setup() {
-    if (!this.element) {
+  modify(
+    element: Element,
+    positionalArgs: PositionalArgs<CodeMirrorSignature>,
+    args: NamedArgs<CodeMirrorSignature>
+  ) {
+    if (!element) {
       throw new Error('CodeMirror modifier has no element');
     }
 
-    console.log('Mode:', this.args.named.mode)
+    if (!this._editor) {
+      this._createEditor(element, args);
+    } else {
+      this._updateEditor(args);
+    }
+  }
 
-    const editor: CodeMirror.Editor = CodeMirror(this.element as HTMLElement, {
-      value: this.args.named.content || '',
-      readOnly: this.args.named.readOnly,
-      mode: this.args.named.mode,
+  private _createEditor(
+    element: Element,
+    args: NamedArgs<CodeMirrorSignature>
+  ) {
+    const editor: CodeMirror.Editor = CodeMirror(element as HTMLElement, {
+      value: args.content || '',
+      readOnly: args.readOnly,
+      mode: args.mode,
       theme: 'neat',
       lineNumbers: true,
       matchBrackets: true,
@@ -61,8 +66,27 @@ export default class CodeMirrorModifier extends Modifier<Args> {
       viewportMargin: Infinity,
     });
 
-    editor.on('change', bind(this, this._onChange));
+    editor.on('change', bind(this, this._onEditorChange));
 
     this._editor = editor;
+  }
+
+  private _updateEditor(
+    args: NamedArgs<CodeMirrorSignature>
+  ) {
+    if (this._editor.getValue() !== args.content) {
+      this._editor.setValue(args.content);
+    }
+
+    this._editor.setOption('readOnly', args.readOnly);
+    this._editor.setOption('mode', args.mode);
+  }
+
+  @action
+  private _onEditorChange(
+    editor: CodeMirror.Editor,
+    _changeObject: CodeMirror.EditorChange
+  ) {
+    this._onUpdate(editor.getValue());
   }
 }
