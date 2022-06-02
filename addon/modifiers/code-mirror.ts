@@ -10,7 +10,7 @@ import 'codemirror/mode/javascript/javascript';
 import 'codemirror/mode/python/python';
 
 
-interface CodeMirrorSignature {
+interface CodeMirrorArgs {
   Args: {
     Named: {
       content: string;
@@ -19,17 +19,17 @@ interface CodeMirrorSignature {
       onUpdate: (content: string) => void;
     };
     Positional: never;
-  }
+  };
 }
 
 
-export default class CodeMirrorModifier extends Modifier<CodeMirrorSignature> {
+export default class CodeMirrorModifier extends Modifier<CodeMirrorArgs> {
   private _editor!: CodeMirror.Editor;
   private _onUpdate!: (content: string) => void;
 
   constructor(
     owner: unknown,
-    args: ArgsFor<CodeMirrorSignature>
+    args: ArgsFor<CodeMirrorArgs>
   ) {
     super(owner, args);
     this._onUpdate = args.named.onUpdate;
@@ -37,8 +37,8 @@ export default class CodeMirrorModifier extends Modifier<CodeMirrorSignature> {
 
   modify(
     element: Element,
-    positionalArgs: PositionalArgs<CodeMirrorSignature>,
-    args: NamedArgs<CodeMirrorSignature>
+    positionalArgs: PositionalArgs<CodeMirrorArgs>,
+    args: NamedArgs<CodeMirrorArgs>
   ) {
     if (!element) {
       throw new Error('CodeMirror modifier has no element');
@@ -53,7 +53,7 @@ export default class CodeMirrorModifier extends Modifier<CodeMirrorSignature> {
 
   private _createEditor(
     element: Element,
-    args: NamedArgs<CodeMirrorSignature>
+    args: NamedArgs<CodeMirrorArgs>
   ) {
     const editor: CodeMirror.Editor = CodeMirror(element as HTMLElement, {
       value: args.content || '',
@@ -72,7 +72,7 @@ export default class CodeMirrorModifier extends Modifier<CodeMirrorSignature> {
   }
 
   private _updateEditor(
-    args: NamedArgs<CodeMirrorSignature>
+    args: NamedArgs<CodeMirrorArgs>
   ) {
     if (this._editor.getValue() !== args.content) {
       this._editor.setValue(args.content);
