@@ -9,7 +9,7 @@ import 'codemirror/mode/clike/clike';
 import 'codemirror/mode/javascript/javascript';
 import 'codemirror/mode/python/python';
 
-import 'node_modules/codemirror/lib/codemirror.css';
+import 'codemirror/lib/codemirror.css';
 
 interface CodeMirrorArgs {
   Args: {
