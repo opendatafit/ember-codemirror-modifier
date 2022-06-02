@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-ember-codemirror
-==============================================================================
-=======
 # @opendatafit/ember-codemirror
->>>>>>> 9d7d6ab (v3.28.5...v4.4.0)
 
 [Short description of the addon.]
 
