@@ -10,6 +10,7 @@ import 'codemirror/mode/javascript/javascript';
 import 'codemirror/mode/python/python';
 
 import 'codemirror/lib/codemirror.css';
+import 'codemirror/theme/neat.css';
 
 interface CodeMirrorArgs {
   Args: {
