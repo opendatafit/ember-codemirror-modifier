@@ -66,6 +66,7 @@ export default class CodeMirrorModifier extends Modifier<CodeMirrorArgs> {
       matchBrackets: true,
       styleActiveLine: true,
       viewportMargin: Infinity,
+      scrollbarStyle: 'null',
     });
 
     editor.on('change', bind(this, this._onEditorChange));
