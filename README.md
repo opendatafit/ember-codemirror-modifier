@@ -1,4 +1,4 @@
-# @opendatafit/ember-codemirror
+# @opendatafit/ember-codemirror-modifier
 
 [Short description of the addon.]
 
@@ -13,7 +13,7 @@
 ## Installation
 
 ```
-ember install ember-codemirror
+ember install @opendatafit/ember-codemirror-modifier
 ```
 
 

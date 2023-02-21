@@ -1,15 +1,16 @@
 {
-  "name": "@opendatafit/ember-codemirror",
+  "name": "@opendatafit/ember-codemirror-modifier",
   "version": "0.0.4",
   "description": "The default blueprint for ember-cli addons.",
   "keywords": [
     "ember-addon",
     "codemirror",
+    "modifiemodifier",
     "opendata.fit"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/opendatafit/ember-codemirror"
+    "url": "https://github.com/opendatafit/ember-codemirror-modifier"
   },
   "license": "MIT",
   "author": "",
