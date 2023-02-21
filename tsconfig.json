@@ -73,16 +73,16 @@
         "tests/dummy/app/*",
         "app/*"
       ],
-      "ember-codemirror": [
+      "@opendatafit/ember-codemirror-modifier": [
         "addon"
       ],
-      "ember-codemirror/*": [
+      "@opendatafit/ember-codemirror-modifier/*": [
         "addon/*"
       ],
-      "ember-codemirror/test-support": [
+      "@opendatafit/ember-codemirror-modifier/test-support": [
         "addon-test-support"
       ],
-      "ember-codemirror/test-support/*": [
+      "@opendatafit/ember-codemirror-modifier/test-support/*": [
         "addon-test-support/*"
       ],
       "*": [
